@@ -1,25 +1,26 @@
-name: Build LaTeX PDF
+name: Build LaTeX document
 
 on:
   push:
     branches: [main]
-  workflow_dispatch:
+  pull_request:
+    branches: [main]
 
 jobs:
-  build:
+  build_latex:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Compile LaTeX
-        uses: xu-cheng/latex-action@v2
-        with:
-          root_file: main.tex
+    - name: Compile LaTeX document
+      uses: xu-cheng/latex-action@v2
+      with:
+        root_file: main.tex
 
-      - name: Upload PDF
-        uses: actions/upload-artifact@v2
-        with:
-          name: IG-Thesis-PDF
-          path: main.pdf
+    - name: Upload PDF
+      uses: actions/upload-artifact@v3
+      with:
+        name: thesis-pdf
+        path: main.pdf
